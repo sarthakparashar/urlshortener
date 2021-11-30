@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %} Error {% endblock %}
+
+{% block content %}
+<h2>Error</h2>
+<div class="row">
+    <div class="col-6">
+        <div class="alert alert-danger" role="alert">
+            {{ msg }}
+        </div>
+        <a class="nav-link" href="{{ url_for('home') }}">Go to home</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+<h2>Dashboard</h2>
+<div class="row">
+    {% if logged %}
+        <div class="col-6 mt-2 mb-4">
+            <table class="table">
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">User ID:</td>
+                    <td>{{ userDetail[0] }}</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">User name:</td>
+                    <td>{{ user.username }}</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">User email:</td>
+                    <td>{{ user.useremail }}</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">Email verified:</td>
+                    <td>{{ 'Verified' if userDetail[1] == True else 'Not verified'  }}</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">Joined on:</td>
+                    <td>{{ userDetail[2] }} IST</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <h4>Created URLs:</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Domain</th>
+                  <th scope="col">Short URL</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if domains|length > 0 %}
+                    {% for d in domains %}
+                        <tr>
+                        <th>{{ loop.index }}</th>
+                        <td>
+                            <a href='{{ d[1] }}' target="_blank">{{ d[1] }}</a>
+                        </td>
+                        <td>
+                            {% set link = url_for('short', key= d[0], _external=True ) %}
+                            <a href='{{ link }}' target="_blank">{{ link }}</a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+              </tbody>
+        </table>
+    {% else %}
+        <div class="col-6">
+            <div class="alert alert-danger" role="alert">
+                Permission denied. Please login first.
+            </div>
+            <a class="nav-link" href="{{ url_for('home') }}">Go to home</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
